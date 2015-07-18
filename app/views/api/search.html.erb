@@ -15,6 +15,9 @@
 <section style="margin-top: 40px;">
 	<h3>Search Results:</h3>
 	<div id="search">
+		<% if @courses.empty? %>
+			<h3>No Such Course Found ! Try searching some other .</h3>
+		<% end %>
 		<% @courses.reverse.each do |course| %>
 	   		<div class="well well-lg">
 	   		<a href="/course/show/<%= course.course_name %>"><h4><%= course.course_name %></h4></a>
