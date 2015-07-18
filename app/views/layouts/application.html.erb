@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Xourse</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+</style>
+<body>
+
+<script type="text/javascript">
+  setTimeout(function() {
+        $('.alert-danger').fadeOut('fast');
+        }, 4000);
+</script>
+
+<script type="text/javascript">
+  setTimeout(function() {
+        $('.alert-info').fadeOut('fast');
+        }, 4000);
+</script>
+
+<script type="text/javascript">
+  setTimeout(function() {
+        $('.alert-success').fadeOut('fast');
+        }, 4000);
+</script>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/index">Xourse</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+      	<li><a href="/index">All Courses</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	      <% if !session[:user_id].nil? %>
+	      	<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/auth/profile"><%= User.find(session[:user_id]).username %></a></li>
+	            <li><a href="/auth/manage_pass">Change Password</a></li>
+	            <li><a href="/auth/logout">Logout</a></li>
+	          </ul>
+	        </li>	
+	      <% else %>
+		      <% if @active == :login %>
+		      	<% login = "active" %>
+		      <% else %>
+		      	<% signup = "active" %>
+		      <% end %>		 
+		        <li class="<%= login %>"><a href="/login">Login</a></li>
+		        <li class="<%= signup %>"><a href="/signup">Sign Up</a></li>
+		  <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+	<% flash.each do |name, msg| %>
+    	<% if msg=="You have successfully logged out" %>
+	      <div class="alert alert-success alert-dismissible" role="alert">
+	        <%= content_tag :div, msg, class: name %> 
+	      </div>
+	      <% elsif msg=="Password changed successfully" %>
+	        <div class="alert alert-info alert-dismissible" role="alert">
+	        <%= content_tag :div, msg, class: name %>
+	      </div>
+	      <% else %>
+	        <div class="alert alert-danger alert-dismissible warning" role="alert">
+	          <%= content_tag :div, msg, class: name %>
+	        </div>
+	    <% end %>
+    <% end %>
+	<%= yield %>
+</div>
+</body>
+</html>

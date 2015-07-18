@@ -1,0 +1,89 @@
+<script type="text/javascript">
+	function create (courseid){
+		var input = document.createElement("input");
+		input.type="text";
+		input.placeholder = "Add Title";
+		input.className="input-group form-control";
+		input.required = true;
+		input.id="title";
+		input.name="title";
+		document.getElementById("container").appendChild(input);
+		document.getElementById("container").focus();
+		var input = document.createElement("input");
+		input.type="text";
+		input.placeholder = "Add embeded Link (Ex: https://www.abcd.com/embeded/AjfieE)";
+		input.className="input-group form-control";
+		input.style.marginTop="15px";
+		input.name="url";
+		input.style.marginBottom="15px";
+		input.required = true;
+		input.id="url";
+		document.getElementById("container").appendChild(input);
+		document.getElementById("container").focus();
+		var a = document.createElement("a");
+		a.innerHTML="<button onclick='addVideo(<%= @course.id %>)' class='btn btn-success'>Add Video</button>";
+		document.getElementById("container").appendChild(a);
+	};
+</script>
+
+<script type="text/javascript">
+	function addVideo(course_id){
+		$.post("/api/create",
+            {
+                title: $('#title').val(),
+                url: $('#url').val(),
+                course_id: course_id
+            },
+            function(data, status){
+                alert(data);
+                location.reload();
+                $('#container').fadeOut('fast');
+            });
+	}
+</script>
+
+<div class="row">
+	<div class="col-lg-4">
+		<a href="/index"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>View All Courses</a>
+		<% if @course.language=="Python" %>
+			<img class="img-responsive" src="http://www.vizteams.com/wp-content/uploads/2013/08/python-logo-master.png">
+		<% elsif @course.language=="Ruby" %>
+			<img class="img-responsive" src="http://tech.co/wp-content/uploads/2014/08/rubyrails.png" style="margin-top:20px;">
+		<% end %>	
+	</div>
+	<div class="col-lg-4">
+		<h3><%= @course.course_name %></h3>
+		<h5><%= @course.language %></h5>
+		<button style="margin-top:5px;margin-right:5px;margin-bottom:5px;" class="btn btn-success"><%= @course.length %> mins</button>
+		<button class="btn btn-danger" style="margin-top:5px;margin-left:5px;margin-right:5px;margin-bottom:5px;"> Level : <%= @course.level %></button>
+		<button class="btn btn-default" style="margin-top:5px;margin-right:5px;margin-bottom:5px;"><%= @course.provider %></button>
+		<button class="btn btn-info" style="margin-top:5px;margin-left:5px;margin-right:5px;margin-bottom:5px;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <%= @course.likes %></button>
+		<button class="btn btn-warning" style="margin-top:5px;margin-left:px;margin-right:5px;margin-bottom:5px;">Rating : <%= @course.rating %></button>
+		<button class="btn btn-primary" style="margin-top:5px;margin-right:5px;margin-bottom:5px;">Views : <%= @course.views %></button>
+	</div>
+	<div class="col-lg-4" style="margin-top:22px;">
+		<h5><%= @course.intro %></h5>
+	</div>
+</div>		
+
+<section style="margin-top: 15px; margin-bottom:15px;">
+	<% @videos.each_with_index do |video,index| %>
+   		<div class="well well-lg">
+			<a href="/video/<%= video.id %>"><h4><%=index+1%>. <%= video.title %></h4></a>	
+   			<%= video.intro %>
+   		</div>
+	<% end %>
+</section>
+
+<section>
+	<% if User.find(session[:user_id]).username == "cashrulz" %> 
+		<a href="#" style="margin-bottom:10px;"><button class="btn btn-danger" onclick="create(<%= @course.id %>); this.onclick=null;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Video</button></a>
+	<% end %>
+</section>
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6" style="margin-top: 10px;";>
+		<div id="container"></div>
+	</div>
+	<div class="col-lg-3"></div>
+</div>

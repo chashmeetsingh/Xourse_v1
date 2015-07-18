@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<h2>Change Password</h2>
+		<hr>
+		<%= form_tag '/auth/change_pass' do  %>
+			<%= label_tag :password, "Password" %>
+			<%= password_field_tag :password, "" , style: "margin-bottom: 15px;",placeholder: "New Password", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :password1, "Password" %>
+			<%= password_field_tag :password1, "", style: "margin-bottom: 15px;", placeholder: "Re-Type Password", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= submit_tag "Change password", class: "btn btn-primary btn-lg btn-block" %>
+		<% end %>
+	</div>
+	<div class="col-lg-3"></div>	
+</div>			

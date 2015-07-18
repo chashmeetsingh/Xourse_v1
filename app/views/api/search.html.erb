@@ -1,0 +1,29 @@
+<div class="row">	
+	<div class="col-lg-1"></div>
+	<div class="col-lg-10">
+		<a href="/index"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>View All Courses</a>
+		<%= form_tag '/api/search' do %>
+        	<div class="form-group">
+        		<%= text_field_tag :keyword ,"", style: "margin-bottom: 15px; margin-top: 100px;", placeholder: "Search other Courses", class: "input-group form-control", required: "", autofocus: "" %>
+        	</div>
+        	<%= submit_tag "Search", class: "btn btn-primary btn-lg btn-block" %>
+        <% end %>
+	</div>
+	<div class="col-lg-1"></div>
+</div>
+
+<section style="margin-top: 40px;">
+	<h3>Search Results:</h3>
+	<div id="search">
+		<% @courses.reverse.each do |course| %>
+	   		<div class="well well-lg">
+	   		<a href="/course/show/<%= course.course_name %>"><h4><%= course.course_name %></h4></a>
+	   		<button class="btn btn-sm btn-success" style="margin-bottom: 5px;"><%= course.provider %></button>
+	   		<p><%= course.intro %></p>
+	   		<button class="btn btn-primary btn-sm"><%= course.language %></button>
+	   		<button class="btn btn-danger btn-sm">Length: <%= course.length %></button>
+	   		<button class="btn btn-warning btn-sm"><%= course.level %></button>
+	   		</div>
+		<% end %>
+	</div>	
+</section>

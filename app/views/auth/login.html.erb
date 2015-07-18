@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<h2>Log In</h2>
+		<hr>
+		<%= form_tag '/auth/login_attempt' do  %>
+			<%= label_tag :username, "Username" %>
+			<%= text_field_tag :username, "" , style: "margin-bottom: 15px;",placeholder: "Username", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :password, "Password" %>
+			<%= password_field_tag :password, "", style: "margin-bottom: 15px;", placeholder: "Password", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= submit_tag "Log In", class: "btn btn-primary btn-lg btn-block" %>
+		<% end %>
+	</div>
+	<div class="col-lg-3"></div>	
+</div>			

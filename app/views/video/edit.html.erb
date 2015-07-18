@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-lg-3">
+		<h3>Edit Video</h3>
+	</div>
+	<div class="col-lg-6" style="margin-top: 50px;">
+		<%= form_tag '/video/update/'+@video.id.to_s do %>
+			<%= label_tag :title %>
+			<%= text_field_tag :title, @video.title, placeholder: "Title", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :intro %>
+			<%= text_field_tag :intro , @video.intro, placeholder: "Description", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :length %>
+			<%= text_field_tag :length , @video.length, placeholder: "Video Length (mins)", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :url %>
+			<%= text_field_tag :url , @video.url, placeholder: "Video Embeded URL", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= submit_tag "Update Video Details" ,:class =>"btn btn-success btn-block", style: "margin-top:10px;" %>
+		<% end %>
+		<a href="/video/<%= @video.id %>"><button class="btn btn-md btn-danger btn-block" style="margin-top: 10px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button></a>
+	</div>
+	<div class="col-lg-3"></div>
+</div>

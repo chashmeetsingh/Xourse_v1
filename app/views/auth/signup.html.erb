@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<h2>Sign Up</h2>
+		<hr>
+		<%= form_for :user,url: { action: 'signup_attempt'} do  %>
+			<%= label_tag :username, "Username" %>
+			<%= text_field_tag :username, "" , name: "user[username]", type:"text",style: "margin-bottom: 15px;",placeholder: "Username", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :email, "Email ID" %>
+			<%= email_field_tag :email, "", name: "user[email]",type:"email",style: "margin-bottom: 15px;", placeholder: "Email ID", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= label_tag :password, "Password" %>
+			<%= password_field_tag :password, "", name: "user[password]",type:"password",style: "margin-bottom: 15px;", placeholder: "Password", class: "input-group form-control", required: "", autofocus: "" %>
+			<%= submit_tag "Sign Up", class: "btn btn-success btn-lg btn-block" %>
+		<% end %>
+	</div>
+	<div class="col-lg-3"></div>	
+</div>			

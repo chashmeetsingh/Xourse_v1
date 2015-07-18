@@ -1,0 +1,92 @@
+<style type="text/css">
+	span.glyphicon {
+    	font-size: 1.0em;
+	}
+</style>
+
+<script type="text/javascript">
+	function like(course_id){
+		var butt = document.getElementById("course_like");
+		if (butt.value == "Join Course"){
+			butt.value="Unjoin Course"
+			butt.className="btn btn-md btn-danger";
+			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-down' aria-hidden='true'></span> Unjoin Course"
+			$.post("/api/likecourse",
+            {
+                course_id: course_id
+            },
+            function(data, status){
+                alert(data);
+            });
+		}
+		else{
+			butt.value="Join Course";
+			butt.className="btn btn-md btn-success";
+			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span> Join Course"
+			$.post("/api/unlikecourse",
+            {
+                course_id: course_id
+            },
+            function(data, status){
+                alert(data);
+            });
+		}
+	};
+</script>
+
+<div class="row">	
+	<div class="col-lg-1"></div>
+	<div class="col-lg-10">
+		<%= form_tag '/api/search' do %>
+        	<div class="form-group">
+        		<%= text_field_tag :keyword ,"", style: "margin-bottom: 15px; margin-top: 100px;", placeholder: "Search Courses with a keyword  Ex: Ruby on Rails, Python", class: "input-group form-control", required: "", autofocus: "" %>
+        	</div>
+        	<%= submit_tag "Search", class: "btn btn-primary btn-lg btn-block" %>
+        <% end %>
+	</div>
+	<div class="col-lg-1"></div>
+</div>
+
+<section style="margin-top: 40px;">
+	<% if User.find(session[:user_id]).username == "cashrulz" %>
+		<a href="/course/new"><button class="btn btn-lg btn-success" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Course</button></a>
+	<% end %> 
+	<div id="search">
+		<% @courses.reverse.each do |course| %>
+	   		<div class="well well-lg">
+			   	<div class="row">
+			   		<div class="col-lg-3">
+			   			<% if course.language=="Python" %>
+							<img class="img-responsive" src="http://www.vizteams.com/wp-content/uploads/2013/08/python-logo-master.png">
+						<% elsif course.language=="Ruby" %>
+							<img class="img-responsive" src="http://tech.co/wp-content/uploads/2014/08/rubyrails.png" style="margin-top:20px;">
+						<% end %>
+			   		</div>
+			   		<div class="col-lg-7">
+				   		<a href="/course/show/<%= course.course_name %>"><h4><%= course.course_name %></h4></a>
+				   		<button class="btn btn-sm btn-success" style="margin-bottom: 5px;"><%= course.provider %></button>
+				   		<p><%= course.intro %></p>
+				   		<button class="btn btn-primary btn-sm"><%= course.language %></button>
+				   		<button class="btn btn-danger btn-sm"><%= course.length %> mins</button>
+				   		<button class="btn btn-warning btn-sm"><%= course.level %></button>
+				   		<button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <%= course.likes %></button>
+	   				</div>
+	   				<div class="col-lg-2" style="margin-top:10px;">
+	   					<% if Join.find_by(:user_id=>session[:user_id],:course_id=>course.id) %>
+	   						<% value="Unjoin Course" %>
+	   						<% cour = "Unjoin Course" %>
+							<% c="glyphicon glyphicon-thumbs-down" %>
+							<% b="danger" %>
+	   					<% else %>
+	   						<% value="Join Course" %>
+	   						<% cour = "Join Course" %>
+							<% c="glyphicon glyphicon-thumbs-up" %>
+							<% b="success" %>
+						<% end %>
+	   					<button class="btn btn-<%=b%>" id="course_like" onclick="like(<%=course.id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
+	   				</div>
+	   			</div>
+	   		</div>
+		<% end %>
+	</div>	
+</section>

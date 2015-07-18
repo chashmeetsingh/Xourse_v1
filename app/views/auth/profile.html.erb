@@ -1,0 +1,71 @@
+<script type="text/javascript">
+	function like(course_id){
+		var butt = document.getElementById("course_like");
+		if (butt.value == "Join Course"){
+			butt.value="Unjoin Course"
+			butt.className="btn btn-md btn-danger";
+			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-down' aria-hidden='true'></span> Unjoin Course"
+			$.post("/api/likecourse",
+            {
+                course_id: course_id
+            },
+            function(data, status){
+                alert(data);
+            });
+		}
+		else{
+			butt.value="Join Course";
+			butt.className="btn btn-md btn-success";
+			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span> Join Course"
+			$.post("/api/unlikecourse",
+            {
+                course_id: course_id
+            },
+            function(data, status){
+                alert(data);
+            });
+		}
+	};
+</script>
+
+<section style="margin-top: 40px;">
+	<h3 style="margin-bottom:20px;">My Courses</h3>
+	<div id="search">
+		<% Join.where(:user_id=>session[:user_id]).reverse.each do |join| %>
+	   		<div class="well well-lg">
+			   	<div class="row">
+			   		<div class="col-lg-3">
+			   			<% if Course.find(join.course_id).language=="Python" %>
+							<img class="img-responsive" src="http://www.vizteams.com/wp-content/uploads/2013/08/python-logo-master.png">
+						<% elsif Course.find(join.course_id).language=="Ruby" %>
+							<img class="img-responsive" src="http://tech.co/wp-content/uploads/2014/08/rubyrails.png" style="margin-top:20px;">
+						<% end %>
+			   		</div>
+			   		<div class="col-lg-7">
+				   		<a href="/course/show/<%= Course.find(join.course_id).course_name %>"><h4><%= Course.find(join.course_id).course_name %></h4></a>
+				   		<button class="btn btn-sm btn-success" style="margin-bottom: 5px;"><%= Course.find(join.course_id).provider %></button>
+				   		<p><%= Course.find(join.course_id).intro %></p>
+				   		<button class="btn btn-primary btn-sm"><%= Course.find(join.course_id).language %></button>
+				   		<button class="btn btn-danger btn-sm"><%= Course.find(join.course_id).length %> mins</button>
+				   		<button class="btn btn-warning btn-sm"><%= Course.find(join.course_id).level %></button>
+				   		<button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> <%= Course.find(join.course_id).likes %></button>
+	   				</div>
+	   				<div class="col-lg-2" style="margin-top:10px;">
+	   					<% if Join.find_by(:user_id=>session[:user_id],:course_id=>Course.find(join.course_id).id) %>
+	   						<% value="Unjoin Course" %>
+	   						<% cour = "Unjoin Course" %>
+							<% c="glyphicon glyphicon-thumbs-down" %>
+							<% b="danger" %>
+	   					<% else %>
+	   						<% value="Join Course" %>
+	   						<% cour = "Join Course" %>
+							<% c="glyphicon glyphicon-thumbs-up" %>
+							<% b="success" %>
+						<% end %>
+	   					<button class="btn btn-<%=b%>" id="course_like" onclick="like(<%=Course.find(join.course_id).id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
+	   				</div>
+	   			</div>
+	   		</div>
+		<% end %>
+	</div>	
+</section>
