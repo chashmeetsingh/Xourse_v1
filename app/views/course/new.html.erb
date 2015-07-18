@@ -11,7 +11,7 @@
 			<%= label_tag :level, "Level" %>
 			<%= select_tag :level, options_for_select([ 'Beginner', 'Intermediate', 'Advanced']), :prompt => 'Select One', style: "margin-bottom: 15px;", class: "input-group form-control", required: "", name: "course[level]",autofocus: "" %>
 			<%= label_tag :provider, "Provider" %>
-			<%= select_tag :provider, options_for_select([ 'Udemy', 'Lynda', 'Tuts+', 'Facebook', 'Google' ]), :prompt => 'Select One', style: "margin-bottom: 15px;", class: "input-group form-control" ,name: "course[provider]", required: "", autofocus: "" %>
+			<%= select_tag :provider, options_for_select([ 'Udemy', 'Lynda', 'Tuts+', 'Facebook', 'Google', "Youtube" ]), :prompt => 'Select One', style: "margin-bottom: 15px;", class: "input-group form-control" ,name: "course[provider]", required: "", autofocus: "" %>
 			<%= label_tag :intro, "Description" %>
 			<%= text_area_tag :intro, "" ,name: "course[intro]", style: "margin-bottom: 15px;", placeholder: "Description", class: "input-group form-control", required: "", autofocus: "" %>
 			<%= submit_tag "Add Course", class: "btn btn-danger btn-lg btn-block" %>
