@@ -1,6 +1,6 @@
 <script type="text/javascript">
-	function like(course_id){
-		var butt = document.getElementById("course_like");
+	function like(course_id,index){
+		var butt = document.getElementById("course_like"+index.toString());
 		if (butt.value == "Join Course"){
 			butt.value="Unjoin Course"
 			butt.className="btn btn-md btn-danger";
@@ -32,11 +32,11 @@
 <section style="margin-top: 40px;">
 	<h3 style="margin-bottom:20px;">My Courses</h3>
 	<div id="search">
-		<% if !Join.where(:user_id=>session[:user_id]) %>
+		<% if Join.where(:user_id=>session[:user_id]).empty? %>
 			<h3>No courses joined yet !!</h3><br>
 			<h4>Visit <a href="/index">this link</a> to join courses.</h4>
 		<% end %>
-		<% Join.where(:user_id=>session[:user_id]).reverse.each do |join| %>
+		<% Join.where(:user_id=>session[:user_id]).reverse.each_with_index do |join,index| %>
 	   		<div class="well well-lg">
 			   	<div class="row">
 			   		<div class="col-lg-3">
@@ -69,7 +69,7 @@
 							<% c="glyphicon glyphicon-thumbs-up" %>
 							<% b="success" %>
 						<% end %>
-	   					<button class="btn btn-<%=b%>" id="course_like" onclick="like(<%=Course.find(join.course_id).id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
+	   					<button class="btn btn-<%=b%>" id="course_like<%=index%>" onclick="like(<%=Course.find(join.course_id).id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
 	   				</div>
 	   			</div>
 	   		</div>
