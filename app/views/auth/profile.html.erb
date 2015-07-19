@@ -69,7 +69,7 @@
 							<% c="glyphicon glyphicon-thumbs-up" %>
 							<% b="success" %>
 						<% end %>
-	   					<button class="btn btn-<%=b%>" id="course_like<%=index%>" onclick="like(<%=Course.find(join.course_id).id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
+	   					<button class="btn btn-<%=b%>" id="course_like<%=index%>" onclick="like(<%=Course.find(join.course_id).id%>,<%=index%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
 	   				</div>
 	   			</div>
 	   		</div>
