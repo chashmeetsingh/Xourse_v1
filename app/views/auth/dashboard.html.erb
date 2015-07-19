@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 	function like(course_id,index){
-		var butt = document.getElementById("course_like"+index.to_s);
+		var butt = document.getElementById("course_like"+index.toString());
 		if (butt.value == "Join Course"){
 			butt.value="Unjoin Course"
 			butt.className="btn btn-md btn-danger";
@@ -52,7 +52,7 @@
 		<a href="/course/new"><button class="btn btn-lg btn-success" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Course</button></a>
 	<% end %> 
 	<div id="search">
-		<% @courses.reverse.each_with_index do |course| %>
+		<% @courses.reverse.each_with_index do |course,index| %>
 	   		<div class="well well-lg">
 			   	<div class="row">
 			   		<div class="col-lg-3">

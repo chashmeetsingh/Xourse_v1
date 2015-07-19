@@ -25,12 +25,17 @@
                 alert(data);
             });
 		}
+		location.reload();
 	};
 </script>
 
 <section style="margin-top: 40px;">
 	<h3 style="margin-bottom:20px;">My Courses</h3>
 	<div id="search">
+		<% if !Join.where(:user_id=>session[:user_id]) %>
+			<h3>No courses joined yet !!</h3><br>
+			<h4>Visit <a href="/index">this link</a> to join courses.</h4>
+		<% end %>
 		<% Join.where(:user_id=>session[:user_id]).reverse.each do |join| %>
 	   		<div class="well well-lg">
 			   	<div class="row">
@@ -39,6 +44,8 @@
 							<img class="img-responsive" src="http://www.vizteams.com/wp-content/uploads/2013/08/python-logo-master.png">
 						<% elsif Course.find(join.course_id).language=="Ruby" %>
 							<img class="img-responsive" src="http://tech.co/wp-content/uploads/2014/08/rubyrails.png" style="margin-top:20px;">
+						<% elsif Course.find(join.course_id).language=="Javascript" %>
+							<img class="img-responsive" src="http://www.technokrats.in/images/Javascript.png" style="margin-top:20px;">	
 						<% end %>
 			   		</div>
 			   		<div class="col-lg-7">
