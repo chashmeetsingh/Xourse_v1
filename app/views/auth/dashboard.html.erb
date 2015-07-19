@@ -5,8 +5,8 @@
 </style>
 
 <script type="text/javascript">
-	function like(course_id){
-		var butt = document.getElementById("course_like");
+	function like(course_id,index){
+		var butt = document.getElementById("course_like"+index.to_s);
 		if (butt.value == "Join Course"){
 			butt.value="Unjoin Course"
 			butt.className="btn btn-md btn-danger";
@@ -52,7 +52,7 @@
 		<a href="/course/new"><button class="btn btn-lg btn-success" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create Course</button></a>
 	<% end %> 
 	<div id="search">
-		<% @courses.reverse.each do |course| %>
+		<% @courses.reverse.each_with_index do |course| %>
 	   		<div class="well well-lg">
 			   	<div class="row">
 			   		<div class="col-lg-3">
@@ -85,7 +85,7 @@
 							<% c="glyphicon glyphicon-thumbs-up" %>
 							<% b="success" %>
 						<% end %>
-	   					<button class="btn btn-<%=b%>" id="course_like" onclick="like(<%=course.id%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
+	   					<button class="btn btn-<%=b%>" id="course_like<%=index%>" onclick="like(<%=course.id%>,<%=index%>);" value="<%=value%>"><span class="<%=c%>" aria-hidden="true"></span> <%=cour%></button>
 	   				</div>
 	   			</div>
 	   		</div>
