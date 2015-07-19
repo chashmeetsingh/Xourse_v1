@@ -2,9 +2,9 @@
 	function like(course_id,index){
 		var butt = document.getElementById("course_like"+index.toString());
 		if (butt.value == "Join Course"){
-			butt.value="Unjoin Course"
+			butt.value="Leave Course"
 			butt.className="btn btn-md btn-danger";
-			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-down' aria-hidden='true'></span> Unjoin Course"
+			butt.innerHTML="<span class='glyphicon glyphicon-thumbs-down' aria-hidden='true'></span> Leave Course"
 			$.post("/api/likecourse",
             {
                 course_id: course_id
@@ -59,8 +59,8 @@
 	   				</div>
 	   				<div class="col-lg-2" style="margin-top:10px;">
 	   					<% if Join.find_by(:user_id=>session[:user_id],:course_id=>Course.find(join.course_id).id) %>
-	   						<% value="Unjoin Course" %>
-	   						<% cour = "Unjoin Course" %>
+	   						<% value="Leave Course" %>
+	   						<% cour = "Leave Course" %>
 							<% c="glyphicon glyphicon-thumbs-down" %>
 							<% b="danger" %>
 	   					<% else %>
